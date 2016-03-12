@@ -1,0 +1,14 @@
+dependencies:
+    override:
+        - pip install -r requirements.txt
+        - python setup.py install --with-serpent
+test:
+    override:
+        - cd counterpartylib; py.test --verbose --capture=no --cov-config=../.coveragerc --cov-report=term-missing --cov=./
+machine:
+    pre:
+        - mkdir -p ~/.local/share/counterparty
+        - cd ~/.local/share/counterparty; wget https://s3.amazonaws.com/counterparty-bootstrap/counterparty-db.latest.tar.gz; tar xvzf counterparty-db.latest.tar.gz;
+        - cd ~/.local/share/counterparty; wget https://s3.amazonaws.com/counterparty-bootstrap/counterparty-db-testnet.latest.tar.gz; tar xvzf counterparty-db-testnet.latest.tar.gz;
+    python:
+        version: 3.4.1
